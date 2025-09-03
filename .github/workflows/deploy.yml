@@ -53,7 +53,6 @@ jobs:
           port: ${{ vars.VPS_PORT }}
           script: |
             cd /home/${{ vars.VPS_USER }}/apps/${{ vars.PROJECT_NAME }}
-            npm install -g serve
             pm2 stop ${{ vars.PROJECT_NAME }} || true
-            pm2 start --name ${{ vars.PROJECT_NAME }} -- npx serve -s /home/${{ vars.VPS_USER }}/apps/${{ vars.PROJECT_NAME }}/build -l ${{ vars.PROJECT_PORT }}
+            pm2 start --name ${{ vars.PROJECT_NAME }} -- npx serve -s ./build -l ${{ vars.PROJECT_PORT }}
             pm2 save
