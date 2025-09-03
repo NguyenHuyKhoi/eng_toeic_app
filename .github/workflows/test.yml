@@ -1,0 +1,14 @@
+name: Validate SSH key
+
+on:
+  workflow_dispatch: # allows you to run manually from GitHub UI
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate SSH key
+        run: |
+          echo "${{ secrets.VPS_SSH_KEY }}" > private_key.pem
+          chmod 600 private_key.pem
+          ssh-keygen -lf private_key.pem || echo "❌ Invalid private key format"

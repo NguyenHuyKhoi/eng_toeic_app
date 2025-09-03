@@ -1,0 +1,56 @@
+[
+  {
+    "id": "689d5bf506fd70290b5eda6c",
+    "title": "VOA Learning English",
+    "description": "Learn English with fun videos!\n\nLearning English is VOA’s multimedia source of news and information for millions of English learners worldwide.\n\nLearning English began as Special English, which Voice of America launched in 1959. Special English newscasts and features were a primary fixture of VOA’s international shortwave broadcasts for more than half a century. In 2014, our line of products was expanded to include more English teaching materials, and the service became known as Learning English.\n\nLearners absorb American English through content drawn from U.S. and world news, Health and Lifestyle, Science and Technology, Arts and Culture, and other topics. Learners can build vocabulary, strengthen speaking skills and improve the ability to communicate for work, school and everyday life.\n\nAudio programs and captioned videos - English in A Minute, Everyday Grammar TV and Learning English TV - are written using vocabulary at the upper-beginner and intermediate level. \n\n\n",
+    "custom_url": "@voalearningenglish",
+    "thumbnails": {
+      "default": {
+        "url": "https://yt3.ggpht.com/bYjN-CYamiBAcRhvsN5ONAd21QHXCZNN9IPDtx5SK76mkKLv642FOm2wr1B9edvuQ_zcctLMwA=s88-c-k-c0x00ffffff-no-rj",
+        "width": 88,
+        "height": 88
+      },
+      "medium": {
+        "url": "https://yt3.ggpht.com/bYjN-CYamiBAcRhvsN5ONAd21QHXCZNN9IPDtx5SK76mkKLv642FOm2wr1B9edvuQ_zcctLMwA=s240-c-k-c0x00ffffff-no-rj",
+        "width": 240,
+        "height": 240
+      },
+      "high": {
+        "url": "https://yt3.ggpht.com/bYjN-CYamiBAcRhvsN5ONAd21QHXCZNN9IPDtx5SK76mkKLv642FOm2wr1B9edvuQ_zcctLMwA=s800-c-k-c0x00ffffff-no-rj",
+        "width": 800,
+        "height": 800
+      }
+    },
+    "youtube_id": "UCKyTokYo0nK2OA-az-sDijA",
+    "deleted_at": null,
+    "created_at": "2025-08-14T03:45:57.024Z",
+    "updated_at": "2025-08-14T03:45:57.024Z"
+  },
+  {
+    "id": "689d5e7b06fd70290b5eda82",
+    "title": "BBC Learning English",
+    "description": "Learn English with the BBC. We publish new videos, podcasts, tutorials and lessons every week to help you learn and improve your English speaking, listening, vocabulary and pronunciation. Subscribe to our channel and hit the bell so you never miss our video uploads!\n\nWe love receiving, reading, and responding to your comments! We ask you all to please use English when you comment. Scroll down for a link to our house rules.\n\nFor more videos and content to help you learn English, visit our website. We're also on TikTok, Facebook and Instagram!\nHappy learning!\n",
+    "custom_url": "@bbclearningenglish",
+    "thumbnails": {
+      "default": {
+        "url": "https://yt3.ggpht.com/ANAs2cAwxesjyoe3vsyhZGzlTafbicnuGMzPNSAuJdpTwg8CesHkViMTCrYqAJEGaKXG6_KEUg=s88-c-k-c0x00ffffff-no-rj",
+        "width": 88,
+        "height": 88
+      },
+      "medium": {
+        "url": "https://yt3.ggpht.com/ANAs2cAwxesjyoe3vsyhZGzlTafbicnuGMzPNSAuJdpTwg8CesHkViMTCrYqAJEGaKXG6_KEUg=s240-c-k-c0x00ffffff-no-rj",
+        "width": 240,
+        "height": 240
+      },
+      "high": {
+        "url": "https://yt3.ggpht.com/ANAs2cAwxesjyoe3vsyhZGzlTafbicnuGMzPNSAuJdpTwg8CesHkViMTCrYqAJEGaKXG6_KEUg=s800-c-k-c0x00ffffff-no-rj",
+        "width": 800,
+        "height": 800
+      }
+    },
+    "youtube_id": "UCHaHD477h-FeBbVh9Sh7syA",
+    "deleted_at": null,
+    "created_at": "2025-08-14T03:56:43.402Z",
+    "updated_at": "2025-08-14T03:56:43.402Z"
+  }
+]

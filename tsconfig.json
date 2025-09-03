@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "allowJs": true,
+     "jsx": "react-jsx",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "outDir": "build",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "@asset": ["./src/asset"],
+      "@common": ["src/common/index.ts"],
+      "@component": ["./src/component"],
+      "@model": ["./src/model"],
+      "@page": ["./src/page"],
+      "@redux": ["./src/redux"],
+      "@service": ["./src/service"],
+      "@theme": ["./src/theme"],      
+      "@data": ["./src/data"],
+      
+    },
+  },
+    "include": ["src", "electron"]
+}
