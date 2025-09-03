@@ -1,4 +1,4 @@
-name: toiec_test
+name: toeic_test
 on:
   push:
     branches:
