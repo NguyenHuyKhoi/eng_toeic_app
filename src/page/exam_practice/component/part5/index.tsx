@@ -22,7 +22,9 @@ export function Part5({ data }: { data: IExamPart }) {
     <Col style={{ paddingTop: "30px" }}>
       {data.questions.map((question, q_index) => (
         <div
-          ref={(el) => (sentenceRefs.current[q_index] = el)}
+          ref={(el) => {
+            sentenceRefs.current[q_index] = el;
+          }}
           style={{
             width: "800px",
             borderBottom: `1px solid ${COLORS.BrightGray}`,

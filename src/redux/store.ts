@@ -1,17 +1,7 @@
 // store.js
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import {
-  commonReducer,
-  dictationReducer,
-  practiceReducer,
-  uiReducer,
-  videoPlayReducer,
-} from "./reducers";
+import { practiceReducer } from "./reducers";
 const reducers = combineReducers({
-  common: commonReducer,
-  ui: uiReducer,
-  dictation: dictationReducer,
-  video_play: videoPlayReducer,
   practice: practiceReducer,
 });
 

@@ -11,7 +11,7 @@ export interface IExam extends EntityBase {
 export interface IExamPart {
   index: number;
   questions: IQuestion[];
-  question_num: number;
+  question_num?: number;
 }
 
 export const TOEIC_PARTS: (Partial<IExamPart> & { question_before: number })[] =

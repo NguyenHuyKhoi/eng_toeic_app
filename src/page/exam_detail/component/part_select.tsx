@@ -9,7 +9,7 @@ export function PartSelect({
   onSelect: (a: number[]) => void;
 }) {
   const OPTIONS: CheckboxOptionType[] = TOEIC_PARTS.map((u) => ({
-    label: `PART ${u.index} (${u.question_num} câu hỏi)`,
+    label: `PART ${u.index} (${u.question_num ?? 0} câu hỏi)`,
     value: u.index,
   }));
   return (

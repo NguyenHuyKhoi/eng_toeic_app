@@ -101,7 +101,11 @@ export function Part1({ data }: { data: IExamPart }) {
   return (
     <div style={{ marginTop: "20px" }}>
       {data.questions.map((question, q_index) => (
-        <div ref={(el) => (sentenceRefs.current[q_index] = el)}>
+        <div
+          ref={(el) => {
+            sentenceRefs.current[q_index] = el;
+          }}
+        >
           <Question data={question} />
         </div>
       ))}

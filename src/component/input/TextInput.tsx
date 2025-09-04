@@ -1,4 +1,3 @@
-import { IVideo } from "@model";
 import { Stack, Typography } from "@mui/material";
 import { COLORS } from "@theme";
 import _ from "lodash";
