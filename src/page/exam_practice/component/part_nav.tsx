@@ -8,28 +8,31 @@ import { useDispatch } from "react-redux";
 
 export function PartNav({ part_indexes }: { part_indexes: number[] }) {
   const dispatch = useDispatch();
-  const { part_index } = useSelector((x) => x.practice);
+  const { part_index, user_answers } = useSelector((x) => x.practice);
   const display_parts = TOEIC_PARTS.filter((part) =>
     part_indexes.includes(part.index)
   );
-  console.log("Display parts: ", display_parts);
+
   return (
     <Col
       style={{
-        width: "260px",
-        padding: "12px 16px",
+        width: "300px",
+        padding: "12px 12px",
         backgroundColor: COLORS.white,
         borderRadius: "6px",
       }}
     >
       <div style={{ maxHeight: "75vh", overflowY: "scroll" }}>
         {display_parts.map((part) => (
-          <Col style={{}}>
+          <Col style={{ paddingBottom: "20px" }}>
             <Typography.Title
               level={5}
+              style={{ marginTop: "4px" }}
             >{`Part ${part.index}`}</Typography.Title>
             <Row style={{ flexWrap: "wrap" }}>
               {new Array(part.question_num ?? 0).fill(0).map((_, q_idx) => {
+                const answered =
+                  user_answers[part.question_before + q_idx + 1] != null;
                 return (
                   <div
                     style={{
@@ -43,6 +46,7 @@ export function PartNav({ part_indexes }: { part_indexes: number[] }) {
                       marginBottom: "6px",
                       borderRadius: "2px",
                       cursor: "pointer",
+                      backgroundColor: answered ? "#35509A" : "#fff",
                     }}
                     onClick={() => {
                       dispatch(practiceActions.selectPart(part.index));
@@ -51,7 +55,7 @@ export function PartNav({ part_indexes }: { part_indexes: number[] }) {
                   >
                     <Typography.Text
                       style={{
-                        color: COLORS.DarkCharcoal,
+                        color: answered ? COLORS.white : COLORS.DarkCharcoal,
                         fontSize: "12px",
                         fontWeight: "600",
                       }}

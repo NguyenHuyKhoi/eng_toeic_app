@@ -4,4 +4,6 @@ export interface PracticeReduxState {
   exam?: IExam;
   part_index: number;
   question_index: number;
+  year?: number;
+  user_answers: (number | null)[];
 }

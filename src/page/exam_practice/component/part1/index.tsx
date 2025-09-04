@@ -1,11 +1,15 @@
 import { useSelector } from "@common";
 import { AudioPlayer } from "@component";
 import { IExamPart, IQuestion } from "@model";
+import { practiceActions } from "@redux";
 import { COLORS } from "@theme";
-import { Col, Row, Tooltip, Typography } from "antd";
+import { Col, Row, Typography } from "antd";
 import { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 
 function Question({ data }: { data: IQuestion }) {
+  const dispatch = useDispatch();
+  const { user_answers } = useSelector((x) => x.practice);
   const [audio_play, setAudioPlay] = useState<boolean>(false);
   const { image_url, audio_url, audio_duration } = data;
   return (
@@ -25,19 +29,18 @@ function Question({ data }: { data: IQuestion }) {
         </Typography.Title>
       </div>
       <div style={{ position: "relative" }}>
-        <Tooltip title={audio_play ? "Dừng" : "Phát lại"}>
-          <div
-            style={{}}
-            onClick={() => {
-              setAudioPlay(!audio_play);
-            }}
-          >
-            <img
-              src={image_url}
-              style={{ width: "600px", aspectRatio: 1.5, cursor: "pointer" }}
-            />
-          </div>
-        </Tooltip>
+        <div
+          style={{}}
+          onClick={() => {
+            setAudioPlay(!audio_play);
+          }}
+        >
+          <img
+            src={image_url}
+            style={{ width: "600px", aspectRatio: 1.5, cursor: "pointer" }}
+          />
+        </div>
+
         <div
           style={{
             position: "absolute",
@@ -62,18 +65,30 @@ function Question({ data }: { data: IQuestion }) {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                backgroundColor: "#fff",
+                backgroundColor:
+                  user_answers[data.index] == idx ? "#35509ADD" : "#fff",
                 borderRadius: "2px",
                 border: `1px solid ${COLORS.BrightGray}`,
                 cursor: "pointer",
                 padding: "6px 0px",
+              }}
+              onClick={() => {
+                dispatch(
+                  practiceActions.selectAnswer({
+                    question_index: data.index,
+                    answer: idx,
+                  })
+                );
               }}
             >
               <Typography.Text
                 style={{
                   fontSize: "26px",
                   fontWeight: "500",
-                  color: COLORS.nickel,
+                  color:
+                    user_answers[data.index] == idx
+                      ? COLORS.white
+                      : COLORS.nickel,
                 }}
               >
                 {option}

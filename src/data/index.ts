@@ -2,8 +2,8 @@ import { IExam, IQuestion } from "@model";
 import EXAMS from "./exams.json";
 import QUESTIONS from "./questions.json";
 export class DB {
-  static exams() {
-    return EXAMS as unknown as IExam[];
+  static exams({ year }: { year?: number }) {
+    return (EXAMS as unknown as IExam[]).filter((u) => u.year === year);
   }
 
   static exam_detail(id: string) {

@@ -1,10 +1,13 @@
 import { Typography } from "antd";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { useExam } from "../exam_detail/hook";
 import { PartNav, PartWrapper } from "./component";
+import { useDispatch } from "react-redux";
+import { practiceActions } from "@redux";
 
 export function ExamPracticePage() {
+  const dispatch = useDispatch();
   const { exam_id } = useParams();
   const queryParams = useMemo(
     () => new URLSearchParams(location.search),
@@ -22,6 +25,10 @@ export function ExamPracticePage() {
   console.log("part: ", part_indexes);
   const { exam, parts } = useExam({ exam_id, part_indexes });
 
+  useEffect(() => {
+    dispatch(practiceActions.selectExam(exam));
+  }, [dispatch, exam]);
+
   if (exam == null) {
     return <div />;
   }
@@ -31,14 +38,14 @@ export function ExamPracticePage() {
     <div
       style={{
         minHeight: "100vh",
-        padding: "10px",
+        padding: "20px 20px",
         width: "100vw",
         backgroundColor: "#F8F9FA",
       }}
     >
-      <Typography.Title level={3}>{`${source} ${year} - TEST ${(
-        index + ""
-      ).padStart(2, "0")}`}</Typography.Title>
+      <Typography.Title level={2} style={{ marginTop: "0px" }}>
+        {`${source} ${year} - TEST ${(index + "").padStart(2, "0")}`}
+      </Typography.Title>
 
       <div style={{ display: "flex" }}>
         <PartNav part_indexes={part_indexes} />

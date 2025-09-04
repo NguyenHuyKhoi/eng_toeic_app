@@ -1,20 +1,43 @@
-import { PracticeReduxState } from "@model";
+import { IExam, PracticeReduxState } from "@model";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: PracticeReduxState = {
   part_index: 1,
   question_index: 1,
+  year: 2024,
+  user_answers: [],
 };
 
 export const practiceSlice = createSlice({
   name: "@practice",
   initialState,
   reducers: {
+    selectExam: (
+      state: PracticeReduxState,
+      { payload }: { payload: IExam }
+    ) => {
+      state.exam = payload;
+      state.user_answers = new Array(201).fill(0).map(() => null);
+    },
     selectPart: (
       state: PracticeReduxState,
       { payload }: { payload: number }
     ) => {
       state.part_index = payload;
+    },
+    selectAnswer: (
+      state: PracticeReduxState,
+      { payload }: { payload: { question_index: number; answer: number } }
+    ) => {
+      const old_answer = state.user_answers[payload.question_index];
+      const new_answer = old_answer === payload.answer ? null : payload.answer;
+      state.user_answers[payload.question_index] = new_answer;
+    },
+    selectYear: (
+      state: PracticeReduxState,
+      { payload }: { payload: number }
+    ) => {
+      state.year = payload;
     },
     selectQuestion: (
       state: PracticeReduxState,
