@@ -3,6 +3,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import {
   commonReducer,
   dictationReducer,
+  practiceReducer,
   uiReducer,
   videoPlayReducer,
 } from "./reducers";
@@ -11,6 +12,7 @@ const reducers = combineReducers({
   ui: uiReducer,
   dictation: dictationReducer,
   video_play: videoPlayReducer,
+  practice: practiceReducer,
 });
 
 export const store = configureStore({

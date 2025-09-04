@@ -1,13 +1,8 @@
-import type { IChannel } from "../channel";
-import { IPlaylist } from "../playlist";
-import { IVideo, IVideoLevel } from "../video";
+import { IExam } from "../exam";
+import { IVideoLevel } from "../video";
 
 export interface CommonReduxState {
-  focus_channel?: IChannel;
-  focus_playlist?: IPlaylist;
-  focus_video?: IVideo;
-
-  video_filter: IVideoFilter;
+  exam?: IExam;
 }
 
 export interface IVideoFilter {
