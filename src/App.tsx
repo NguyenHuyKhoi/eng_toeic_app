@@ -8,6 +8,7 @@ import { ExamDetailPage } from "./page/exam_detail";
 import { ExamPracticePage } from "./page/exam_practice";
 import { ToastContainer } from "react-toastify";
 import { GlobalAlert, globalAlertRef } from "@component";
+import { CheckPage } from "./page/check";
 
 function AppRoutes() {
   console.log("Render here");
@@ -15,6 +16,7 @@ function AppRoutes() {
     <BrowserRouter>
       <Routes>
         <Route path={``} element={<ExamListPage />} />
+        <Route path={`/check`} element={<CheckPage />} />
         <Route path={`/exam/:exam_id`} element={<ExamDetailPage />} />
         <Route
           path={`/exam_practice/:exam_id`}

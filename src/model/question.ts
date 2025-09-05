@@ -23,6 +23,8 @@ export interface IQuestion extends EntityBase {
   audio_duration: number;
   image_url: string;
   image_urls: string[];
+  content_image_urls: string[];
+  image_read_complete: boolean;
   statement: string;
   part: number;
   index: number;
