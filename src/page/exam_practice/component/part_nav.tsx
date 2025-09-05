@@ -1,6 +1,5 @@
 import { useSelector } from "@common";
-import { showToast } from "@component";
-import { TOEIC_PARTS } from "@model";
+import { QUESTION_BEFORE_PART, TOEIC_PARTS } from "@model";
 import { practiceActions } from "@redux";
 import { COLORS } from "@theme";
 import { Col, Row, Tag, Typography } from "antd";
@@ -8,28 +7,34 @@ import { useDispatch } from "react-redux";
 
 export function PartNav({ part_indexes }: { part_indexes: number[] }) {
   const dispatch = useDispatch();
-  const { part_index } = useSelector((x) => x.practice);
+  const { part_index, user_answers } = useSelector((x) => x.practice);
   const display_parts = TOEIC_PARTS.filter((part) =>
     part_indexes.includes(part.index)
   );
-  console.log("Display parts: ", display_parts);
+
   return (
     <Col
       style={{
-        width: "260px",
-        padding: "12px 16px",
+        width: "300px",
+        padding: "12px 12px",
         backgroundColor: COLORS.white,
         borderRadius: "6px",
       }}
     >
       <div style={{ maxHeight: "75vh", overflowY: "scroll" }}>
         {display_parts.map((part) => (
-          <Col style={{}}>
+          <Col style={{ paddingBottom: "20px" }}>
             <Typography.Title
               level={5}
+              style={{ marginTop: "4px" }}
             >{`Part ${part.index}`}</Typography.Title>
             <Row style={{ flexWrap: "wrap" }}>
               {new Array(part.question_num ?? 0).fill(0).map((_, q_idx) => {
+                const answered =
+                  user_answers[part.question_before + q_idx + 1] != null;
+
+                const question_index =
+                  QUESTION_BEFORE_PART[part.index] + q_idx + 1;
                 return (
                   <div
                     style={{
@@ -43,20 +48,21 @@ export function PartNav({ part_indexes }: { part_indexes: number[] }) {
                       marginBottom: "6px",
                       borderRadius: "2px",
                       cursor: "pointer",
+                      backgroundColor: answered ? "#35509A" : "#fff",
                     }}
                     onClick={() => {
                       dispatch(practiceActions.selectPart(part.index));
-                      dispatch(practiceActions.selectQuestion(q_idx));
+                      dispatch(practiceActions.selectQuestion(question_index));
                     }}
                   >
                     <Typography.Text
                       style={{
-                        color: COLORS.DarkCharcoal,
-                        fontSize: "12px",
+                        color: answered ? COLORS.white : COLORS.DarkCharcoal,
+                        fontSize: question_index > 100 ? "11px" : "12px",
                         fontWeight: "600",
                       }}
                     >
-                      {q_idx + 1}
+                      {question_index}
                     </Typography.Text>
                   </div>
                 );
@@ -76,6 +82,11 @@ export function PartNav({ part_indexes }: { part_indexes: number[] }) {
           <Tag
             onClick={() => {
               dispatch(practiceActions.selectPart(part.index));
+              dispatch(
+                practiceActions.selectQuestion(
+                  QUESTION_BEFORE_PART[part.index] + 1
+                )
+              );
             }}
             color={part_index === part.index ? "blue" : "default"}
             key={part.index}

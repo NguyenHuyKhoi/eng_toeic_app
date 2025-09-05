@@ -1,5 +1,5 @@
 import { IExam } from "@model";
-import { Card, Row } from "antd";
+import { Button, Card, Row } from "antd";
 import { useNavigate } from "react-router-dom";
 
 export function ExamItem({ data }: { data: IExam }) {
@@ -14,11 +14,7 @@ export function ExamItem({ data }: { data: IExam }) {
         navigate(`/exam/${id}`);
       }}
     >
-      <Row style={{ justifyContent: "space-between" }}>
-        <p>120 phút</p>
-        <p>7 phần thi</p>
-        <p>200 câu hỏi</p>
-      </Row>
+      <Button variant="outlined">Practice</Button>
     </Card>
   );
 }

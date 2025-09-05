@@ -4,6 +4,7 @@ import { useExam } from "./hook";
 import { PartSelect } from "./component";
 import { Button, Col, Row, Typography } from "antd";
 import { showToast } from "@component";
+import { COLORS } from "@theme";
 
 export function ExamDetailPage() {
   const navigate = useNavigate();
@@ -19,9 +20,25 @@ export function ExamDetailPage() {
   }
   const { source, year, index, id } = exam;
   return (
-    <Row style={{ minHeight: "100vh", padding: "10px" }} align="top">
-      <Col span={24}>
-        <Typography.Title level={3}>
+    <Row
+      style={{
+        height: "100vh",
+        width: "100vw",
+        padding: "20px 20px",
+        backgroundColor: "#F8F9FA",
+      }}
+      align="top"
+    >
+      <Col
+        span={24}
+        style={{
+          backgroundColor: "#fff",
+          padding: "12px 20px",
+          borderRadius: "6px",
+          border: `1px solid ${COLORS.SpanishGray}`,
+        }}
+      >
+        <Typography.Title level={1} style={{ marginTop: "0px" }}>
           {`${source} ${year} - TEST ${(index + "").padStart(2, "0")}`}
         </Typography.Title>
         <PartSelect selected_list={parts} onSelect={setParts} />
@@ -29,14 +46,14 @@ export function ExamDetailPage() {
           type="primary"
           onClick={() => {
             if (parts.length === 0) {
-              showToast({ content: "Chưa chọn phần nào", type: "warning" });
+              showToast({ content: "No part is selected", type: "warning" });
               return;
             }
             navigate(`/exam_practice/${id}?parts=${parts.join(",")}`);
           }}
           style={{ marginTop: "12px" }}
         >
-          Luyện tập
+          Practice
         </Button>
       </Col>
     </Row>

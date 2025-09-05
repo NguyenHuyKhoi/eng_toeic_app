@@ -8,7 +8,7 @@ import { Part5 } from "./part5";
 import { Part6_7 } from "./part6_7";
 
 export function PartWrapper({ parts }: { parts: IExamPart[] }) {
-  const { part_index } = useSelector((x) => x.practice);
+  const { part_index, user_answers } = useSelector((x) => x.practice);
 
   const part = parts.find((u) => u.index === part_index);
   const renderPart = useCallback(
@@ -30,7 +30,7 @@ export function PartWrapper({ parts }: { parts: IExamPart[] }) {
           return <div />;
       }
     },
-    [part_index]
+    [part_index, user_answers]
   );
   if (!part) {
     return <div />;
@@ -47,7 +47,7 @@ export function PartWrapper({ parts }: { parts: IExamPart[] }) {
       <div
         style={{
           display: "flex",
-          height: "80vh",
+          height: "90vh",
           overflowY: "scroll",
           backgroundColor: "#fff",
           flexDirection: "column",

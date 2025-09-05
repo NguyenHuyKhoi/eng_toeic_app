@@ -13,7 +13,15 @@ export interface IExamPart {
   questions: IQuestion[];
   question_num?: number;
 }
-
+export const QUESTION_BEFORE_PART: Record<number, number> = {
+  1: 0,
+  2: 6,
+  3: 31,
+  4: 70,
+  5: 100,
+  6: 130,
+  7: 146,
+};
 export const TOEIC_PARTS: (Partial<IExamPart> & { question_before: number })[] =
   [
     {

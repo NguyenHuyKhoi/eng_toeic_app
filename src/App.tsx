@@ -7,6 +7,7 @@ import { ExamListPage } from "./page/exam_list";
 import { ExamDetailPage } from "./page/exam_detail";
 import { ExamPracticePage } from "./page/exam_practice";
 import { ToastContainer } from "react-toastify";
+import { GlobalAlert, globalAlertRef } from "@component";
 
 function AppRoutes() {
   console.log("Render here");
@@ -30,6 +31,7 @@ function App() {
       <CssBaseline />
       <AppRoutes />
       <ToastContainer />
+      <GlobalAlert ref={globalAlertRef} />
     </Provider>
   );
 }
