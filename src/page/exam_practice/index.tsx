@@ -64,7 +64,7 @@ export function ExamPracticePage() {
           justifyContent: "space-between",
         }}
       >
-        <Typography.Title level={2} style={{ marginTop: "0px" }}>
+        <Typography.Title level={3} style={{ marginTop: "0px" }}>
           {`${source} ${year} - TEST ${(index + "").padStart(2, "0")}`}
         </Typography.Title>
         <Button
