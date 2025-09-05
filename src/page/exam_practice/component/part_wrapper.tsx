@@ -47,7 +47,7 @@ export function PartWrapper({ parts }: { parts: IExamPart[] }) {
       <div
         style={{
           display: "flex",
-          height: "80vh",
+          height: "90vh",
           overflowY: "scroll",
           backgroundColor: "#fff",
           flexDirection: "column",

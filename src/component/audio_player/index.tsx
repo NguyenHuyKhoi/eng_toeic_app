@@ -12,10 +12,12 @@ export function AudioPlayer({
   audio_duration,
   audio_url,
   audio_playing,
+  onChangePlayTime,
 }: {
   audio_url: string;
   audio_duration: number;
   audio_playing?: boolean;
+  onChangePlayTime?: (a: number) => void;
 }) {
   const dispatch = useDispatch();
   const [playing, setPlaying] = useState<boolean>(false);
@@ -34,6 +36,10 @@ export function AudioPlayer({
 
   const percent =
     audio_duration > 0 ? Math.floor((play_time / audio_duration) * 100) : 0;
+
+  useEffect(() => {
+    onChangePlayTime?.(play_time);
+  }, [onChangePlayTime, play_time]);
 
   // Handle play/pause
   useEffect(() => {

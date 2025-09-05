@@ -46,14 +46,14 @@ export function ExamDetailPage() {
           type="primary"
           onClick={() => {
             if (parts.length === 0) {
-              showToast({ content: "Chưa chọn phần nào", type: "warning" });
+              showToast({ content: "No part is selected", type: "warning" });
               return;
             }
             navigate(`/exam_practice/${id}?parts=${parts.join(",")}`);
           }}
           style={{ marginTop: "12px" }}
         >
-          Luyện tập
+          Practice
         </Button>
       </Col>
     </Row>

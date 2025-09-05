@@ -1,6 +1,5 @@
 import { useSelector } from "@common";
-import { showToast } from "@component";
-import { TOEIC_PARTS } from "@model";
+import { QUESTION_BEFORE_PART, TOEIC_PARTS } from "@model";
 import { practiceActions } from "@redux";
 import { COLORS } from "@theme";
 import { Col, Row, Tag, Typography } from "antd";
@@ -33,6 +32,9 @@ export function PartNav({ part_indexes }: { part_indexes: number[] }) {
               {new Array(part.question_num ?? 0).fill(0).map((_, q_idx) => {
                 const answered =
                   user_answers[part.question_before + q_idx + 1] != null;
+
+                const question_index =
+                  QUESTION_BEFORE_PART[part.index] + q_idx + 1;
                 return (
                   <div
                     style={{
@@ -50,17 +52,17 @@ export function PartNav({ part_indexes }: { part_indexes: number[] }) {
                     }}
                     onClick={() => {
                       dispatch(practiceActions.selectPart(part.index));
-                      dispatch(practiceActions.selectQuestion(q_idx));
+                      dispatch(practiceActions.selectQuestion(question_index));
                     }}
                   >
                     <Typography.Text
                       style={{
                         color: answered ? COLORS.white : COLORS.DarkCharcoal,
-                        fontSize: "12px",
+                        fontSize: question_index > 100 ? "11px" : "12px",
                         fontWeight: "600",
                       }}
                     >
-                      {q_idx + 1}
+                      {question_index}
                     </Typography.Text>
                   </div>
                 );
@@ -80,6 +82,11 @@ export function PartNav({ part_indexes }: { part_indexes: number[] }) {
           <Tag
             onClick={() => {
               dispatch(practiceActions.selectPart(part.index));
+              dispatch(
+                practiceActions.selectQuestion(
+                  QUESTION_BEFORE_PART[part.index] + 1
+                )
+              );
             }}
             color={part_index === part.index ? "blue" : "default"}
             key={part.index}
