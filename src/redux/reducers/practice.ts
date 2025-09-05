@@ -18,7 +18,7 @@ export const practiceSlice = createSlice({
       { payload }: { payload: IExam }
     ) => {
       state.exam = payload;
-      state.user_answers = new Array(201).fill(0).map(() => null);
+      state.user_answers = new Array(201).fill(null);
       state.showed_answers = [];
     },
     selectPart: (

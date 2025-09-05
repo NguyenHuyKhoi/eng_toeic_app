@@ -65,7 +65,9 @@ export function TranscriptList({
                 flexDirection: "row",
                 alignItems: "flex-start",
               }}
-              ref={(el) => (sentenceRefs.current[s_i] = el)}
+              ref={(el) => {
+                sentenceRefs.current[s_i] = el;
+              }}
             >
               <Tooltip title="Play this sentence" placement="left">
                 <Box sx={{ cursor: "pointer" }} onClick={() => {}}>
