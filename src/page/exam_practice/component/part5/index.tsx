@@ -34,6 +34,7 @@ export function Part5({ data }: { data: IExamPart }) {
           style={{
             backgroundColor: "#fff",
             borderRadius: "4px",
+            border: `2px solid ${COLORS.BrightGray}`,
             ...(is_mobile
               ? { margin: "0px 0px 20px 0px" }
               : {

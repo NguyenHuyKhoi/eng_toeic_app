@@ -21,7 +21,7 @@ function Question({ data }: { data: IQuestion }) {
   return (
     <div
       style={{
-        paddingBottom: is_mobile ? "20px" : "50px",
+        marginBottom: is_mobile ? "20px" : "50px",
         borderRadius: "6px",
         border: `1px solid ${COLORS.bright_Gray}`,
         backgroundColor: "#fff",
