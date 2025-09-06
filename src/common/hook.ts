@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useSelector } from "@common";
 import { IExam, IExamPart, IQuestion, ISubQuestion } from "@model";
 import { Api } from "@service";
@@ -29,7 +30,7 @@ export const useUI = () => {
     const mediaQuery = window.matchMedia("(max-width: 600px)");
     setIsMobile(mediaQuery.matches);
 
-    const listener = (e) => setIsMobile(e.matches);
+    const listener = (e: any) => setIsMobile(e.matches);
     mediaQuery.addEventListener("change", listener);
     return () => mediaQuery.removeEventListener("change", listener);
   }, []);
