@@ -1,4 +1,4 @@
-import { useSelector } from "@common";
+import { useSelector, useUI } from "@common";
 import { practiceActions } from "@redux";
 import { COLORS } from "@theme";
 import { Tooltip, Typography } from "antd";
@@ -12,6 +12,7 @@ export function QuestionHeader({
   const dispatch = useDispatch();
   const { showed_answers } = useSelector((x) => x.practice);
   const is_showed = showed_answers.includes(question_indexes[0]);
+  const { is_mobile } = useUI();
   return (
     <Tooltip title={is_showed ? "Hide correct answer" : "Show correct answer"}>
       <div
@@ -34,8 +35,7 @@ export function QuestionHeader({
         <Typography.Title
           level={5}
           style={{
-            paddingTop: "12px",
-
+            paddingTop: is_mobile ? "6px" : "12px",
             marginTop: "0px",
           }}
         >

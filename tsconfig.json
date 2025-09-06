@@ -21,8 +21,6 @@
       "@redux": ["./src/redux"],
       "@service": ["./src/service"],
       "@theme": ["./src/theme"],      
-      "@data": ["./src/data"],
-      
     },
   },
     "include": ["src", "electron"]

@@ -1,9 +1,10 @@
-import { useSelector } from "@common";
+import { useSelector, useUI } from "@common";
 import { IExamPart, QUESTION_BEFORE_PART } from "@model";
 import { Col } from "antd";
 import { useEffect, useRef } from "react";
 import { MCQuestion } from "../common/mc_question";
 import { COLORS } from "@theme";
+import { WidthFull } from "@mui/icons-material";
 
 export function Part5({ data }: { data: IExamPart }) {
   const { question_index } = useSelector((x) => x.practice);
@@ -18,32 +19,34 @@ export function Part5({ data }: { data: IExamPart }) {
     }
   }, [question_index]);
 
+  const { is_mobile, window_width } = useUI();
   return (
-    <Col style={{ paddingTop: "30px" }}>
+    <Col
+      style={{
+        paddingTop: is_mobile ? "0px" : "0px",
+      }}
+    >
       {data.questions.map((question, q_index) => (
         <div
           ref={(el) => {
             questionRefs.current[QUESTION_BEFORE_PART[5] + q_index + 1] = el;
           }}
           style={{
-            width: "800px",
-            // borderBottom: `1px solid ${COLORS.BrightGray}`,
-            paddingBottom: "2px",
+            backgroundColor: "#fff",
+            borderRadius: "4px",
+            ...(is_mobile
+              ? { margin: "0px 0px 20px 0px" }
+              : {
+                  width: "800px",
+                  padding: "4px 10px",
+                  margin: "0px 0px 30px 0px",
+                }),
           }}
         >
           <MCQuestion
             index={QUESTION_BEFORE_PART[5] + q_index + 1}
             data={{ ...question, title: question.statement }}
-          />
-          <div
-            style={{
-              marginLeft: "40px",
-              marginRight: "40px",
-              height: "2px",
-              alignSelf: "center",
-              backgroundColor: COLORS.BrightGray,
-              marginTop: "16px",
-            }}
+            enable_show_correct
           />
         </div>
       ))}

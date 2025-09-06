@@ -1,4 +1,4 @@
-import { useSelector } from "@common";
+import { useExam, useSelector, useUI } from "@common";
 import { AudioPlayer } from "@component";
 import { IExamPart, IQuestion } from "@model";
 import { practiceActions } from "@redux";
@@ -15,13 +15,17 @@ function Question({ data }: { data: IQuestion }) {
   const [audio_play, setAudioPlay] = useState<boolean>(false);
   const { image_url, audio_url, audio_duration } = data;
 
+  const { getOptionColor } = useExam({});
+  const { is_mobile, window_width } = useUI();
   const showed_correct = showed_answers.includes(data.index);
+
   return (
     <div
       style={{
         borderRadius: "6px",
         border: `1px solid ${COLORS.bright_Gray}`,
-        marginBottom: "60px",
+        marginBottom: is_mobile ? "32px" : "60px",
+        backgroundColor: "#fff",
       }}
     >
       <QuestionHeader question_indexes={[data.index]} />
@@ -36,7 +40,11 @@ function Question({ data }: { data: IQuestion }) {
             <img
               src={image_url}
               style={{
-                width: showed_correct ? "400px" : "460px",
+                width: is_mobile
+                  ? window_width * 0.9
+                  : showed_correct
+                  ? "400px"
+                  : "520px",
                 aspectRatio: 1.5,
                 cursor: "pointer",
               }}
@@ -58,12 +66,17 @@ function Question({ data }: { data: IQuestion }) {
             />
           </div>
         </div>
-        {showed_correct && (
+        {showed_correct && !is_mobile && (
           <div style={{ marginLeft: "12px", width: "400px" }}>
             <TranscriptList data={data} />
           </div>
         )}
       </div>
+      {showed_correct && is_mobile && (
+        <div style={{ padding: "12px 8px" }}>
+          <TranscriptList data={data} />
+        </div>
+      )}
       <div>
         <Row>
           {["A", "B", "C", "D"].map((option, idx) => (
@@ -73,13 +86,7 @@ function Question({ data }: { data: IQuestion }) {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                backgroundColor:
-                  showed_answers.includes(data.index) &&
-                  data.correct_answer === idx
-                    ? COLORS.DarkSpringGreen
-                    : user_answers[data.index] == idx
-                    ? "#35509ADD"
-                    : "#fff",
+                backgroundColor: getOptionColor(data, idx),
                 borderRadius: "2px",
                 border: `1px solid ${COLORS.BrightGray}`,
                 cursor: "pointer",
@@ -116,6 +123,7 @@ function Question({ data }: { data: IQuestion }) {
   );
 }
 export function Part1({ data }: { data: IExamPart }) {
+  const { is_mobile } = useUI();
   const { question_index } = useSelector((x) => x.practice);
   const questionRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -128,11 +136,10 @@ export function Part1({ data }: { data: IExamPart }) {
     }
   }, [question_index]);
 
-  console.log("Question index: ", question_index);
   return (
     <div
       style={{
-        marginTop: "20px",
+        paddingTop: is_mobile ? 0 : "20px",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",

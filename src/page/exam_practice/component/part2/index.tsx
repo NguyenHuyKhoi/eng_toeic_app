@@ -1,4 +1,4 @@
-import { useSelector } from "@common";
+import { useSelector, useUI } from "@common";
 import { AudioPlayer } from "@component";
 import { IExamPart, IQuestion, QUESTION_BEFORE_PART } from "@model";
 import { practiceActions } from "@redux";
@@ -17,19 +17,21 @@ function Question({ data }: { data: IQuestion }) {
   const q_index = QUESTION_BEFORE_PART[2] + data.index;
   const showed_correct = showed_answers.includes(q_index);
 
+  const { window_width, is_mobile } = useUI();
   return (
     <div
       style={{
-        marginBottom: "50px",
+        paddingBottom: is_mobile ? "20px" : "50px",
         borderRadius: "6px",
         border: `1px solid ${COLORS.bright_Gray}`,
+        backgroundColor: "#fff",
       }}
     >
       <QuestionHeader
         question_indexes={[QUESTION_BEFORE_PART[2] + data.index]}
       />
 
-      <div style={{ width: "600px" }}>
+      <div style={{ width: is_mobile ? window_width * 0.9 : "600px" }}>
         <AudioPlayer audio_url={audio_url} audio_duration={audio_duration} />
       </div>
       {showed_correct && (

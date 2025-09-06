@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useExam } from "./hook";
 import { PartSelect } from "./component";
 import { Button, Col, Row, Typography } from "antd";
 import { showToast } from "@component";
-import { COLORS } from "@theme";
+import { BG_COLOR, COLORS } from "@theme";
+import { useExam } from "@common";
 
 export function ExamDetailPage() {
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ export function ExamDetailPage() {
         height: "100vh",
         width: "100vw",
         padding: "20px 20px",
-        backgroundColor: "#F8F9FA",
+        backgroundColor: BG_COLOR,
       }}
       align="top"
     >

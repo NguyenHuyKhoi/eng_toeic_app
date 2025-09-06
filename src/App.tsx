@@ -2,21 +2,17 @@ import { CssBaseline } from "@mui/material";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import { store } from "@redux";
-import { ExamListPage } from "./page/exam_list";
-import { ExamDetailPage } from "./page/exam_detail";
-import { ExamPracticePage } from "./page/exam_practice";
-import { ToastContainer } from "react-toastify";
 import { GlobalAlert, globalAlertRef } from "@component";
-import { CheckPage } from "./page/check";
-
+import { store } from "@redux";
+import { ToastContainer } from "react-toastify";
+import { ExamDetailPage } from "./page/exam_detail";
+import { ExamListPage } from "./page/exam_list";
+import { ExamPracticePage } from "./page/exam_practice";
 function AppRoutes() {
-  console.log("Render here");
   return (
     <BrowserRouter>
       <Routes>
         <Route path={``} element={<ExamListPage />} />
-        <Route path={`/check`} element={<CheckPage />} />
         <Route path={`/exam/:exam_id`} element={<ExamDetailPage />} />
         <Route
           path={`/exam_practice/:exam_id`}

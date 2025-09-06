@@ -67,3 +67,4 @@ export const COLORS = {
 };
 
 export const MAIN_COLOR = "#6491C0";
+export const BG_COLOR = "#F9FAF9";

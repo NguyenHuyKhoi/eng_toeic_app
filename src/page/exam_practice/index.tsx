@@ -1,18 +1,18 @@
-import { Button, Typography } from "antd";
-import { useEffect, useMemo } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { useExam } from "../exam_detail/hook";
-import { PartNav, PartWrapper } from "./component";
-import { useDispatch } from "react-redux";
-import { practiceActions } from "@redux";
-import { useSelector } from "@common";
+import { useExam, useUI } from "@common";
 import { QUESTION_BEFORE_PART } from "@model";
-import { globalAlert } from "@component";
+import { practiceActions } from "@redux";
+import { BG_COLOR } from "@theme";
+import { useEffect, useMemo } from "react";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+
+import { MobilePartNav } from "./component/part_nav/mobile";
+import { DesktopPartNav, PartWrapper } from "./component";
 
 export function ExamPracticePage() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { part_index } = useSelector((x) => x.practice);
+  const { is_mobile } = useUI();
+
   const { exam_id } = useParams();
   const queryParams = useMemo(
     () => new URLSearchParams(location.search),
@@ -46,45 +46,38 @@ export function ExamPracticePage() {
   if (exam == null) {
     return <div />;
   }
-  const { source, year, index } = exam;
+  console.log("Examm: ", exam, is_mobile);
+
   return (
     <div
       style={{
         minHeight: "100vh",
-        padding: "20px 20px",
+        padding: is_mobile ? "10px 8px" : "20px 20px",
         width: "100vw",
-        backgroundColor: "#F8F9FA",
+        backgroundColor: BG_COLOR,
+        position: "relative",
       }}
     >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        <Typography.Title level={3} style={{ marginTop: "0px" }}>
-          {`${source} ${year} - TEST ${(index + "").padStart(2, "0")}`}
-        </Typography.Title>
-        <Button
-          variant="outlined"
-          onClick={() => {
-            globalAlert.show({
-              title: "Confirm exit",
-              onConfirm: () => navigate("/"),
-            });
-          }}
-        >
-          Exit
-        </Button>
-      </div>
-
       <div style={{ display: "flex" }}>
-        <PartNav part_indexes={part_indexes} />
+        {!is_mobile && (
+          <DesktopPartNav part_indexes={part_indexes} exam={exam} />
+        )}
 
         <PartWrapper parts={parts} />
       </div>
+      {is_mobile && (
+        <div
+          style={{
+            position: "absolute",
+            zIndex: 999,
+            left: "10px",
+            right: "10px",
+            bottom: "8px",
+          }}
+        >
+          <MobilePartNav part_indexes={part_indexes} exam={exam} />
+        </div>
+      )}
     </div>
   );
 }

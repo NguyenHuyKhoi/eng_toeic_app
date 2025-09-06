@@ -1,18 +1,21 @@
-import { DB } from "@data";
+import { useSelector } from "@common";
 import { IExam } from "@model";
+import { practiceActions } from "@redux";
+import { Api } from "@service";
 import { Col, Row, Tag, Typography } from "antd";
 import { useCallback, useEffect, useState } from "react";
-import { ExamItem } from "./component";
-import { useSelector } from "@common";
 import { useDispatch } from "react-redux";
-import { practiceActions } from "@redux";
+import { ExamItem } from "./component";
+import { BG_COLOR } from "@theme";
 
 export function ExamListPage() {
   const dispatch = useDispatch();
   const { year } = useSelector((x) => x.practice);
   const [data, setData] = useState<IExam[]>([]);
-  const getData = useCallback(() => {
-    const list = DB.exams({ year });
+  const getData = useCallback(async () => {
+    const res = await Api.exam.index({ year });
+
+    const list = res.data;
     list.sort((u, v) => (u.index < v.index ? -1 : 1));
     setData(list);
   }, [year]);
@@ -24,7 +27,7 @@ export function ExamListPage() {
   return (
     <div
       style={{
-        backgroundColor: "#F8F9FA",
+        backgroundColor: BG_COLOR,
         overflow: "auto",
         padding: "20px",
         width: "100vw",

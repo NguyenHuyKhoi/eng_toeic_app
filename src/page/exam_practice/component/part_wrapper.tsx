@@ -1,4 +1,4 @@
-import { useSelector } from "@common";
+import { useSelector, useUI } from "@common";
 import { IExamPart } from "@model";
 import { useCallback } from "react";
 import { Part1 } from "./part1";
@@ -32,6 +32,7 @@ export function PartWrapper({ parts }: { parts: IExamPart[] }) {
     },
     [part_index, user_answers]
   );
+  const { is_mobile } = useUI();
   if (!part) {
     return <div />;
   }
@@ -41,17 +42,17 @@ export function PartWrapper({ parts }: { parts: IExamPart[] }) {
         display: "flex",
         flex: 1,
         flexDirection: "column",
-        marginLeft: "20px",
+        marginLeft: is_mobile ? 0 : "20px",
       }}
     >
       <div
         style={{
           display: "flex",
-          height: "90vh",
+          height: "95vh",
           overflowY: "scroll",
-          backgroundColor: "#fff",
           flexDirection: "column",
-          alignItems: "center",
+
+          ...(is_mobile ? {} : { alignItems: "center" }),
         }}
       >
         {renderPart(part)}

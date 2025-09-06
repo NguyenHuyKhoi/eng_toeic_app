@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { formatDuration } from "@common";
+import { formatDuration, useUI } from "@common";
 import PauseCircleOutlinedIcon from "@mui/icons-material/PauseCircleOutlined";
 import PlayCircleOutlinedIcon from "@mui/icons-material/PlayCircleOutlined";
 import { Box, Stack } from "@mui/material";
@@ -134,6 +134,7 @@ export function AudioPlayer({
     setPlayTime(newTime);
   };
 
+  const { is_mobile } = useUI();
   return (
     <Stack
       direction={"row"}
@@ -142,7 +143,7 @@ export function AudioPlayer({
         py: 0.5,
         backgroundColor: `#00000066`,
         borderRadius: "4px",
-        padding: "2px 20px",
+        padding: is_mobile ? "2px 6px" : "2px 20px",
       }}
     >
       {audio_url && <audio ref={audioRef} src={audio_url} />}
