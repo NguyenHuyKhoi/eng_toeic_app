@@ -1,10 +1,9 @@
 import { useSelector, useUI } from "@common";
 import { IExamPart, QUESTION_BEFORE_PART } from "@model";
+import { COLORS } from "@theme";
 import { Col } from "antd";
 import { useEffect, useRef } from "react";
 import { MCQuestion } from "../common/mc_question";
-import { COLORS } from "@theme";
-import { WidthFull } from "@mui/icons-material";
 
 export function Part5({ data }: { data: IExamPart }) {
   const { question_index } = useSelector((x) => x.practice);
@@ -19,7 +18,7 @@ export function Part5({ data }: { data: IExamPart }) {
     }
   }, [question_index]);
 
-  const { is_mobile, window_width } = useUI();
+  const { is_mobile } = useUI();
   return (
     <Col
       style={{
@@ -51,6 +50,7 @@ export function Part5({ data }: { data: IExamPart }) {
           />
         </div>
       ))}
+      <div style={{ height: "60px", width: "100px" }} />
     </Col>
   );
 }

@@ -1,4 +1,4 @@
-import { useExam, useUI } from "@common";
+import { bottomPadding, isChromeAndroid, useExam, useUI } from "@common";
 import { QUESTION_BEFORE_PART } from "@model";
 import { practiceActions } from "@redux";
 import { BG_COLOR } from "@theme";
@@ -8,10 +8,11 @@ import { useParams } from "react-router-dom";
 
 import { MobilePartNav } from "./component/part_nav/mobile";
 import { DesktopPartNav, PartWrapper } from "./component";
+import { Typography } from "@mui/material";
 
 export function ExamPracticePage() {
   const dispatch = useDispatch();
-  const { is_mobile } = useUI();
+  const { is_mobile, viewport_height, viewport_width } = useUI();
 
   const { exam_id } = useParams();
   const queryParams = useMemo(
@@ -51,14 +52,15 @@ export function ExamPracticePage() {
   return (
     <div
       style={{
-        minHeight: "100vh",
         padding: is_mobile ? "10px 8px" : "20px 20px",
-        width: "100vw",
+        width: viewport_width,
         backgroundColor: BG_COLOR,
         position: "relative",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "flex", flex: 1 }}>
         {!is_mobile && (
           <DesktopPartNav part_indexes={part_indexes} exam={exam} />
         )}
@@ -69,10 +71,9 @@ export function ExamPracticePage() {
         <div
           style={{
             position: "absolute",
-            zIndex: 999,
-            left: "10px",
-            right: "10px",
-            bottom: "8px",
+            left: "0px",
+            right: "0px",
+            bottom: "0px",
           }}
         >
           <MobilePartNav part_indexes={part_indexes} exam={exam} />

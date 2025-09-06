@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { formatDuration } from "@common";
+import { formatDuration, useUI } from "@common";
 import { IQuestion } from "@model";
 import { Box, Stack, Tooltip, Typography } from "@mui/material";
 import { COLORS } from "@theme";
@@ -15,6 +15,7 @@ export function TranscriptList({
 }) {
   const transcript = data.audio_transcribe ?? [];
 
+  const { is_mobile } = useUI();
   const scrollRef = useRef<HTMLDivElement>(null);
   const sentenceRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -44,7 +45,7 @@ export function TranscriptList({
   }, [sentence_idx]);
 
   return (
-    <Stack sx={{ display: "flex", mt: 1.5 }}>
+    <Stack sx={{ display: "flex" }}>
       <Stack
         ref={scrollRef}
         sx={{
@@ -52,7 +53,7 @@ export function TranscriptList({
           overflowY: "scroll",
           maxHeight: "400px",
         }}
-        spacing={1.2}
+        spacing={is_mobile ? 0.8 : 1.2}
       >
         {transcript.map((sentence, s_i) => {
           const is_sentence_focused = sentence_idx === s_i;
@@ -73,7 +74,7 @@ export function TranscriptList({
                 <Box sx={{ cursor: "pointer" }} onClick={() => {}}>
                   <Typography
                     style={{
-                      fontSize: 14,
+                      fontSize: is_mobile ? "12px" : "12px",
                       fontWeight: is_sentence_focused ? 600 : 400,
                       color: is_sentence_focused
                         ? COLORS.CelticBlue
@@ -87,7 +88,7 @@ export function TranscriptList({
               </Tooltip>
               <Typography
                 style={{
-                  fontSize: 15,
+                  fontSize: is_mobile ? "14px" : "15px",
                   color: is_sentence_focused
                     ? COLORS.CelticBlue
                     : COLORS.DarkCharcoal,

@@ -1,11 +1,13 @@
 import { useSelector, useUI } from "@common";
 import { IExamPart, IQuestion, QUESTION_BEFORE_PART } from "@model";
 import { COLORS } from "@theme";
-import { Button, Col, Row } from "antd";
+import { Button, Col, Row, Typography } from "antd";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { MCQuestion } from "../common/mc_question";
 import { images } from "@asset";
 import { QuestionHeader } from "../common/question_header";
+import { useDispatch } from "react-redux";
+import { practiceActions } from "@redux";
 function Question({
   data,
   before_question_num,
@@ -13,11 +15,12 @@ function Question({
   data: IQuestion;
   before_question_num: number;
 }) {
-  const { part_index } = useSelector((x) => x.practice);
+  const dispatch = useDispatch();
+  const { part_index, showed_answers } = useSelector((x) => x.practice);
   const { image_urls } = data;
   const [mobile_show_image, setMobileShowImage] = useState<boolean>(false);
 
-  const { is_mobile, window_width, window_height } = useUI();
+  const { is_mobile, viewport_width, viewport_height } = useUI();
   const renderImages = useCallback(() => {
     return (
       <>
@@ -25,7 +28,7 @@ function Question({
           <img
             src={images.no_image}
             style={{
-              width: is_mobile ? window_width * 0.9 : "90%",
+              width: is_mobile ? "90vw" : "90%",
               aspectRatio: 1.5,
               alignSelf: "center",
               borderRadius: "4px",
@@ -43,8 +46,8 @@ function Question({
               }}
               src={img_url}
               style={{
-                maxWidth: is_mobile ? window_width * 0.9 : "500px",
-                maxHeight: is_mobile ? window_height * 0.4 : "600px",
+                maxWidth: is_mobile ? "90vw" : "500px",
+                maxHeight: is_mobile ? "40vh" : "600px",
                 width: "auto",
                 height: "auto",
                 objectFit: "contain",
@@ -57,24 +60,50 @@ function Question({
         )}
       </>
     );
-  }, [image_urls, is_mobile, window_height, window_width]);
+  }, [image_urls, is_mobile]);
 
   const renderSubQuestions = useCallback(() => {
     return (
       <>
         {data.sub_questions.map((sub_question, sub_index) => {
           return (
-            <MCQuestion
-              data={sub_question}
-              index={before_question_num + sub_index + 1}
-            />
+            <div
+              style={{
+                ...(is_mobile
+                  ? {
+                      borderBottom:
+                        sub_index < data.sub_questions.length - 1
+                          ? `2px solid ${COLORS.BrightGray}`
+                          : undefined,
+                    }
+                  : {}),
+              }}
+            >
+              <MCQuestion
+                data={sub_question}
+                index={before_question_num + sub_index + 1}
+              />
+            </div>
           );
         })}
       </>
     );
-  }, [data, before_question_num]);
+  }, [data.sub_questions, is_mobile, before_question_num]);
 
-  console.log("Image urls: ", image_urls);
+  const question_indexes = new Array(data.sub_questions.length)
+    .fill(0)
+    .map((_, i) => before_question_num + i + 1);
+
+  const showed_correct =
+    question_indexes.length > 0
+      ? showed_answers.includes(question_indexes[0])
+      : false;
+
+  useEffect(() => {
+    if (is_mobile && showed_correct) {
+      setMobileShowImage(false);
+    }
+  }, [showed_correct, is_mobile]);
   return (
     <Row
       style={{
@@ -83,14 +112,11 @@ function Question({
         margin: is_mobile ? "0px 0px 20px 0px" : "0px 16px 50px 16px",
         display: "flex",
         backgroundColor: "#fff",
+        position: "relative",
       }}
     >
       <div style={{ width: "100%" }}>
-        <QuestionHeader
-          question_indexes={new Array(data.sub_questions.length)
-            .fill(0)
-            .map((_, i) => before_question_num + i + 1)}
-        />
+        <QuestionHeader question_indexes={question_indexes} />
       </div>
       {!is_mobile ? (
         <Row style={{ width: "100%" }}>
@@ -141,6 +167,26 @@ function Question({
           )}
         </div>
       )}
+
+      {data.sub_questions.length >= 4 && (
+        <Typography.Text
+          onClick={() => {
+            if (showed_correct) {
+              dispatch(practiceActions.hideCorrectAnswer(question_indexes));
+            } else {
+              dispatch(practiceActions.showCorrectAnswer(question_indexes));
+            }
+          }}
+          style={{
+            fontSize: "20px",
+            position: "absolute",
+            right: "8px",
+            bottom: "10px",
+          }}
+        >
+          {showed_correct ? "🙈" : "✨"}
+        </Typography.Text>
+      )}
     </Row>
   );
 }
@@ -180,6 +226,7 @@ export function Part6_7({ data }: { data: IExamPart }) {
             ref={(el) => {
               questionRefs.current[q_index + 1] = el;
             }}
+            style={{}}
           >
             <Question
               before_question_num={before_question_num}
@@ -188,6 +235,7 @@ export function Part6_7({ data }: { data: IExamPart }) {
           </div>
         );
       })}
+      <div style={{ height: "60px", width: "100px" }} />
     </Col>
   );
 }

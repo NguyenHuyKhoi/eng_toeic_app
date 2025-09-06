@@ -28,7 +28,7 @@ export function MCQuestion({
     return (
       <Tooltip title={showed_correct ? "Hide answer" : "Show answer"}>
         <div
-          style={{ padding: is_mobile ? "4px 2px" : 0 }}
+          style={{ padding: is_mobile ? "2px 2px" : 0 }}
           onClick={() => {
             if (showed_correct) {
               dispatch(practiceActions.hideCorrectAnswer([index]));
@@ -52,13 +52,15 @@ export function MCQuestion({
   }, [showed_correct, dispatch, index]);
 
   const { is_mobile } = useUI();
+
+  const trim_title = title != null ? title.replace(/^\d+\.\s*/, "") : null;
   return (
     <div
       style={{
         display: "flex",
         flexDirection: "row",
         // backgroundColor: "red",
-        ...(is_mobile ? { padding: "6px 12px" } : { padding: "10px 6px" }),
+        ...(is_mobile ? { padding: "4px 12px" } : { padding: "10px 6px" }),
       }}
     >
       <div style={{ display: "flex", flexDirection: "column" }}>
@@ -95,13 +97,13 @@ export function MCQuestion({
           flexDirection: "column",
         }}
       >
-        {title && (
+        {trim_title != null && (
           <div>
             <Typography.Text
               style={{
                 fontSize: is_mobile ? "15px" : "15px",
                 fontWeight: "500",
-                color: COLORS.DarkCharcoal,
+                color: COLORS.black,
               }}
             >
               {is_mobile && (
@@ -115,7 +117,7 @@ export function MCQuestion({
                   {index + ". "}
                 </Typography.Text>
               )}
-              {title.replace(/^\d+\.\s*/, "")}
+              {trim_title}
             </Typography.Text>
           </div>
         )}
@@ -130,6 +132,14 @@ export function MCQuestion({
               <div style={{ display: "flex", flexDirection: "column" }}>
                 {answers.map((answer, answer_index) => (
                   <div
+                    onClick={() => {
+                      dispatch(
+                        practiceActions.selectAnswer({
+                          question_index: index,
+                          answer: answer_index,
+                        })
+                      );
+                    }}
                     style={{
                       display: "flex",
                       flexDirection: "row",
@@ -142,15 +152,8 @@ export function MCQuestion({
                     <Radio
                       key={answer_index}
                       value={answer_index}
-                      onClick={() => {
-                        dispatch(
-                          practiceActions.selectAnswer({
-                            question_index: index,
-                            answer: answer_index,
-                          })
-                        );
-                      }}
                       style={{
+                        fontSize: is_mobile ? "14px" : "14px",
                         fontWeight:
                           showed_correct && answer_index === data.correct_answer
                             ? "600"
@@ -172,7 +175,7 @@ export function MCQuestion({
               </div>
             </Radio.Group>
           </div>
-          {is_mobile && renderShowAnswer()}
+          {enable_show_correct && is_mobile && renderShowAnswer()}
         </div>
       </div>
     </div>

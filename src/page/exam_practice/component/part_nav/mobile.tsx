@@ -39,25 +39,30 @@ export function MobilePartNav({
       ? display_parts.find((u) => u.index === part_index)
       : undefined;
 
+  const BORDER_COLOR = COLORS.Nickel;
   console.log("Grid show: ", grid_show, current_part);
   return (
     <Col
       style={{
-        padding: "8px 4px",
-        backgroundColor: COLORS.white,
-        borderRadius: "6px",
+        padding: "0px 6px",
       }}
     >
       {grid_show && current_part && (
         <Col
           style={{
             borderRadius: "4px",
-            border: `1px solid ${COLORS.BrightGray}`,
-            padding: "8px 6px",
-            marginBottom: "4px",
+            marginBottom: "8px",
           }}
         >
-          <Row style={{ flexWrap: "wrap" }}>
+          <Row
+            style={{
+              flexWrap: "wrap",
+              backgroundColor: COLORS.white,
+              padding: "10px 0px",
+              border: `1.5px solid ${BORDER_COLOR}`,
+              borderRadius: "4px",
+            }}
+          >
             {new Array(current_part.question_num ?? 0)
               .fill(0)
               .map((_, q_idx) => {
@@ -70,27 +75,28 @@ export function MobilePartNav({
                 return (
                   <div
                     style={{
-                      width: "36px",
-                      height: "36px",
+                      width: "40px",
+                      height: "40px",
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
                       border: `1px solid ${COLORS.nickel}`,
                       marginLeft: "6px",
                       marginBottom: "6px",
-                      borderRadius: "2px",
+                      borderRadius: "3px",
                       cursor: "pointer",
-                      backgroundColor: answered ? "#35509A" : "#fff",
+                      backgroundColor: answered ? "#35509AAA" : "#fff",
                     }}
                     onClick={() => {
                       dispatch(practiceActions.selectQuestion(question_index));
+                      setGridShow(false);
                     }}
                   >
                     <Typography.Text
                       style={{
                         color: answered ? COLORS.white : COLORS.DarkCharcoal,
-                        fontSize: question_index > 100 ? "12px" : "14px",
-                        fontWeight: "600",
+                        fontSize: question_index > 100 ? "16px" : "20px",
+                        fontWeight: "400",
                       }}
                     >
                       {question_index}
@@ -103,7 +109,12 @@ export function MobilePartNav({
       )}
 
       <div
-        style={{ display: "flex", flexDirection: "row", alignItems: "center" }}
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          backgroundColor: "#fff",
+        }}
       >
         <div
           style={{
@@ -113,8 +124,8 @@ export function MobilePartNav({
             overflowY: "scroll",
             flex: 1,
             borderRadius: "4px",
-            border: `1px solid ${COLORS.nickel}`,
-            padding: "6px 2px 8px 2px",
+            border: `1.5px solid ${BORDER_COLOR}`,
+            padding: "8px 2px 8px 2px",
             marginRight: "8px",
           }}
           className="hidden-scrollbar"
@@ -149,7 +160,7 @@ export function MobilePartNav({
                 key={part.index}
                 style={{ cursor: "pointer", marginLeft: "2px" }}
               >
-                <Typography.Text style={{ fontSize: "14px" }}>
+                <Typography.Text style={{ fontSize: "20px" }}>
                   {`Part ` + part.index}
                 </Typography.Text>
               </Tag>
@@ -158,10 +169,10 @@ export function MobilePartNav({
         </div>
         <div
           style={{
-            width: "36px",
-            height: "36px",
+            width: "50px",
+            height: "50px",
             borderRadius: "4px",
-            border: `1px solid ${COLORS.nickel}`,
+            border: `1.5px solid ${BORDER_COLOR}`,
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -169,14 +180,14 @@ export function MobilePartNav({
         >
           {grid_show ? (
             <GridOffIcon
-              sx={{ fontSize: "24px", color: COLORS.nickel }}
+              sx={{ fontSize: "36px", color: COLORS.nickel }}
               onClick={() => {
                 setGridShow(false);
               }}
             />
           ) : (
             <AppsIcon
-              sx={{ fontSize: "24px", color: COLORS.nickel }}
+              sx={{ fontSize: "36px", color: COLORS.nickel }}
               onClick={() => {
                 setGridShow(true);
               }}

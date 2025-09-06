@@ -72,7 +72,12 @@ export function DesktopPartNav({
         </Button>
       </div>
 
-      <div style={{ maxHeight: "75vh", overflowY: "scroll" }}>
+      <div
+        style={{
+          maxHeight: "75vh",
+          overflowY: "scroll",
+        }}
+      >
         {display_parts.map((part) => (
           <Col
             style={{ paddingBottom: "20px" }}

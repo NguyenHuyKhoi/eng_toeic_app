@@ -141,7 +141,7 @@ export function AudioPlayer({
       alignItems={"center"}
       sx={{
         py: 0.5,
-        backgroundColor: `#00000066`,
+        backgroundColor: `#00000043`,
         borderRadius: "4px",
         padding: is_mobile ? "2px 6px" : "2px 20px",
       }}
@@ -157,18 +157,22 @@ export function AudioPlayer({
       >
         {!playing ? (
           <PlayCircleOutlinedIcon
-            sx={{ fontSize: 26, color: "#fff", marginTop: "6px" }}
+            sx={{ fontSize: 28, color: "#fff", marginTop: "6px" }}
           />
         ) : (
           <PauseCircleOutlinedIcon
-            sx={{ fontSize: 26, color: "#fff", marginTop: "6px" }}
+            sx={{ fontSize: 28, color: "#fff", marginTop: "6px" }}
           />
         )}
       </Box>
 
       {/* Current Time */}
       <Typography.Text
-        style={{ fontSize: 14, color: COLORS.white, fontWeight: "600" }}
+        style={{
+          fontSize: is_mobile ? 13 : 14,
+          color: COLORS.white,
+          fontWeight: "600",
+        }}
       >
         {formatDuration(play_time)}
       </Typography.Text>
@@ -201,16 +205,16 @@ export function AudioPlayer({
         {/* Draggable circle */}
         <Box
           sx={{
-            width: "14px",
-            height: "14px",
+            width: is_mobile ? "20px" : "14px",
+            height: is_mobile ? "20px" : "14px",
             borderRadius: "30px",
-            border: `2px solid #91CAFF`,
+            border: `${is_mobile ? "4px" : "2px"} solid #91CAFF`,
             backgroundColor: "#fff",
             position: "absolute",
             top: "50%",
             transform: "translate(-50%, -50%)",
             left: `${percent}%`,
-            zIndex: 2,
+
             cursor: "grab",
           }}
           onMouseDown={handleDragStart}
@@ -220,7 +224,11 @@ export function AudioPlayer({
 
       {/* Duration */}
       <Typography.Text
-        style={{ fontSize: 14, color: COLORS.white, fontWeight: "600" }}
+        style={{
+          fontSize: is_mobile ? 13 : 14,
+          color: COLORS.white,
+          fontWeight: "600",
+        }}
       >
         {formatDuration(audio_duration)}
       </Typography.Text>
@@ -239,7 +247,6 @@ export function AudioPlayer({
             left: 0,
             width: "100vw",
             height: "100vh",
-            zIndex: 9999,
           }}
         />
       )}

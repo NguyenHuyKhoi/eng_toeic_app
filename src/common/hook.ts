@@ -6,24 +6,31 @@ import { COLORS } from "@theme";
 import { useCallback, useEffect, useState } from "react";
 export const useUI = () => {
   const [is_mobile, setIsMobile] = useState(false);
-  const [windowSize, setWindowSize] = useState({
+  const getSize = () => ({
     width: window.innerWidth,
-    height: window.innerHeight,
+    height: window.visualViewport?.height || window.innerHeight, // ✅ chuẩn trên mobile
   });
+
+  const [viewportSize, setWindowSize] = useState(getSize);
 
   useEffect(() => {
     const handleResize = () => {
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
+      setWindowSize(getSize());
     };
 
+    // Dùng cả resize và visual viewport change
     window.addEventListener("resize", handleResize);
-    // Cập nhật lần đầu
+    window.visualViewport?.addEventListener("resize", handleResize); // ✅ Chrome Android support
+    window.visualViewport?.addEventListener("scroll", handleResize); // một số thiết bị cuộn làm thay đổi chiều cao
+
+    // Khởi tạo giá trị đúng ngay từ đầu
     handleResize();
 
-    return () => window.removeEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.visualViewport?.removeEventListener("resize", handleResize);
+      window.visualViewport?.removeEventListener("scroll", handleResize);
+    };
   }, []);
 
   useEffect(() => {
@@ -37,8 +44,8 @@ export const useUI = () => {
 
   return {
     is_mobile,
-    window_width: windowSize.width,
-    window_height: windowSize.height,
+    viewport_width: viewportSize.width,
+    viewport_height: viewportSize.height,
   };
 };
 

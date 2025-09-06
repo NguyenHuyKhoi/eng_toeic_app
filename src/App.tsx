@@ -8,6 +8,7 @@ import { ToastContainer } from "react-toastify";
 import { ExamDetailPage } from "./page/exam_detail";
 import { ExamListPage } from "./page/exam_list";
 import { ExamPracticePage } from "./page/exam_practice";
+import { Typography } from "antd";
 function AppRoutes() {
   return (
     <BrowserRouter>

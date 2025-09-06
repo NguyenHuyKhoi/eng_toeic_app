@@ -3,7 +3,7 @@ import { AudioPlayer } from "@component";
 import { IExamPart, IQuestion } from "@model";
 import { practiceActions } from "@redux";
 import { COLORS } from "@theme";
-import { Col, Row, Typography } from "antd";
+import { Col, Radio, Row, Typography } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { QuestionHeader } from "../common/question_header";
@@ -16,7 +16,7 @@ function Question({ data }: { data: IQuestion }) {
   const { image_url, audio_url, audio_duration } = data;
 
   const { getOptionColor } = useExam({});
-  const { is_mobile, window_width } = useUI();
+  const { is_mobile, viewport_height } = useUI();
   const showed_correct = showed_answers.includes(data.index);
 
   return (
@@ -40,11 +40,7 @@ function Question({ data }: { data: IQuestion }) {
             <img
               src={image_url}
               style={{
-                width: is_mobile
-                  ? window_width * 0.9
-                  : showed_correct
-                  ? "400px"
-                  : "520px",
+                width: is_mobile ? "90vw" : showed_correct ? "400px" : "520px",
                 aspectRatio: 1.5,
                 cursor: "pointer",
               }}
@@ -77,8 +73,9 @@ function Question({ data }: { data: IQuestion }) {
           <TranscriptList data={data} />
         </div>
       )}
-      <div>
-        <Row>
+
+      <Radio.Group value={user_answers[data.index]} style={{ width: "100%" }}>
+        <Row style={{ width: "100%" }}>
           {["A", "B", "C", "D"].map((option, idx) => (
             <Col
               span={6}
@@ -86,8 +83,7 @@ function Question({ data }: { data: IQuestion }) {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                backgroundColor: getOptionColor(data, idx),
-                borderRadius: "2px",
+
                 border: `1px solid ${COLORS.BrightGray}`,
                 cursor: "pointer",
                 padding: "6px 0px",
@@ -101,24 +97,29 @@ function Question({ data }: { data: IQuestion }) {
                 );
               }}
             >
-              <Typography.Text
+              <Radio
+                value={idx}
                 style={{
-                  fontSize: "26px",
-                  fontWeight: "500",
-                  color:
+                  fontSize: "20px",
+                  fontWeight:
                     showed_correct && data.correct_answer === idx
-                      ? COLORS.white
-                      : user_answers[data.index] == idx
-                      ? COLORS.white
-                      : COLORS.nickel,
+                      ? "900"
+                      : "400",
+                  color: getOptionColor(data, idx, "#000"),
+                  // color:
+                  //   showed_correct && data.correct_answer === idx
+                  //     ? COLORS.DarkCharcoal
+                  //     : user_answers[data.index] == idx
+                  //     ? COLORS.DarkCharcoal
+                  //     : COLORS.nickel,
                 }}
               >
                 {option}
-              </Typography.Text>
+              </Radio>
             </Col>
           ))}
         </Row>
-      </div>
+      </Radio.Group>
     </div>
   );
 }

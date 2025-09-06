@@ -4,7 +4,7 @@ import { PartSelect } from "./component";
 import { Button, Col, Row, Typography } from "antd";
 import { showToast } from "@component";
 import { BG_COLOR, COLORS } from "@theme";
-import { useExam } from "@common";
+import { useExam, useUI } from "@common";
 
 export function ExamDetailPage() {
   const navigate = useNavigate();
@@ -15,6 +15,7 @@ export function ExamDetailPage() {
   const { exam } = useExam({ exam_id });
   console.log("Exam: ", exam);
 
+  const { is_mobile } = useUI();
   if (exam == null) {
     return <div>No exam data</div>;
   }
@@ -24,7 +25,7 @@ export function ExamDetailPage() {
       style={{
         height: "100vh",
         width: "100vw",
-        padding: "20px 20px",
+        padding: is_mobile ? "12px 10px" : "20px 20px",
         backgroundColor: BG_COLOR,
       }}
       align="top"
@@ -33,28 +34,72 @@ export function ExamDetailPage() {
         span={24}
         style={{
           backgroundColor: "#fff",
-          padding: "12px 20px",
+          padding: is_mobile ? "10px 6px" : "12px 10px",
           borderRadius: "6px",
           border: `1px solid ${COLORS.SpanishGray}`,
+          display: "flex",
+          flexDirection: "column",
         }}
       >
-        <Typography.Title level={1} style={{ marginTop: "0px" }}>
-          {`${source} ${year} - TEST ${(index + "").padStart(2, "0")}`}
-        </Typography.Title>
-        <PartSelect selected_list={parts} onSelect={setParts} />
-        <Button
-          type="primary"
-          onClick={() => {
-            if (parts.length === 0) {
-              showToast({ content: "No part is selected", type: "warning" });
-              return;
-            }
-            navigate(`/exam_practice/${id}?parts=${parts.join(",")}`);
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: "100%",
+            borderBottom: `1px solid ${COLORS.BrightGray}`,
+            padding: "4px 0px",
           }}
-          style={{ marginTop: "12px" }}
         >
-          Practice
-        </Button>
+          <Button
+            type="default"
+            onClick={() => {
+              navigate(-1);
+            }}
+            variant="outlined"
+            size="small"
+            style={{}}
+          >
+            Back
+          </Button>
+          <Typography.Title level={is_mobile ? 4 : 3} style={{ marginTop: 0 }}>
+            {`${source} ${year} - TEST ${(index + "").padStart(2, "0")}`}
+          </Typography.Title>
+          <div style={{ width: "60px", height: "10px" }} />
+        </div>
+        <div
+          style={{
+            paddingTop: "12px",
+            ...(is_mobile ? {} : { alignSelf: "center" }),
+          }}
+        >
+          <PartSelect selected_list={parts} onSelect={setParts} />
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+            marginTop: "20px",
+          }}
+        >
+          <Button
+            type="primary"
+            size={is_mobile ? "middle" : "large"}
+            onClick={() => {
+              if (parts.length === 0) {
+                showToast({ content: "No part is selected", type: "warning" });
+                return;
+              }
+              navigate(`/exam_practice/${id}?parts=${parts.join(",")}`);
+            }}
+            style={{}}
+          >
+            Practice
+          </Button>
+        </div>
       </Col>
     </Row>
   );

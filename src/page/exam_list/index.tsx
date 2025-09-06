@@ -1,4 +1,4 @@
-import { useSelector } from "@common";
+import { useSelector, useUI } from "@common";
 import { IExam } from "@model";
 import { practiceActions } from "@redux";
 import { Api } from "@service";
@@ -24,21 +24,22 @@ export function ExamListPage() {
     getData();
   }, [getData]);
 
+  const { is_mobile } = useUI();
   return (
     <div
       style={{
         backgroundColor: BG_COLOR,
         overflow: "auto",
-        padding: "20px",
+        padding: is_mobile ? "12px 10px 10px 10px" : "12px 16px 16px 30px",
         width: "100vw",
         height: "100vh",
       }}
     >
       <Typography.Title
-        level={1}
+        level={is_mobile ? 3 : 2}
         style={{
-          marginTop: "10px",
-          marginBottom: "12px",
+          marginTop: is_mobile ? 0 : "10px",
+          marginBottom: is_mobile ? "4px" : "4px",
         }}
       >
         {`TOEIC ETS`}
@@ -53,15 +54,24 @@ export function ExamListPage() {
             key={year_item}
             style={{ cursor: "pointer", marginLeft: "6px", marginTop: "6px" }}
           >
-            <Typography.Text style={{ fontSize: "14px" }}>
+            <Typography.Text style={{ fontSize: "16px" }}>
               {year_item}
             </Typography.Text>
           </Tag>
         ))}
       </div>
-      <Row gutter={[10, 20]} style={{ marginTop: "10px" }}>
+      <Row style={{ marginTop: "10px" }}>
         {data.map((item) => (
-          <Col key={item.id} xs={24} sm={12} md={6}>
+          <Col
+            key={item.id}
+            xs={24}
+            sm={12}
+            md={6}
+            style={{
+              paddingRight: is_mobile ? 0 : "16px",
+              paddingBottom: is_mobile ? "10px" : "20px",
+            }}
+          >
             <ExamItem data={item} />
           </Col>
         ))}
